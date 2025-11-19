@@ -16,6 +16,14 @@ const Estoque = db.define('estoque',{
             key: 'codProduto'  
         }
     },
+    // idUsuario: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     references: {
+    //         model: 'usuarios',
+    //         key: 'id'
+    //     }
+    // },
     quantidade_atual: {
         type: DataTypes.INTEGER,
         allowNull: true,

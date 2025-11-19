@@ -1,4 +1,4 @@
-const conn = require('./db/conn') 
+const conn = require('./db/conn')
 
 const { 
     Usuario, 
@@ -32,6 +32,4 @@ async function syncDataBase(){
         console.log('Conexão com o banco de dados fechada.')
     }
 }
-
-// Chamar a função para sincronizar o banco de dados
 syncDataBase()

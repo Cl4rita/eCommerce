@@ -102,3 +102,36 @@ btnVoltar.addEventListener('click', () => {
 
 // Exibe os produtos ao carregar a página
 mostrarCarrinho()
+
+/*// No btnFinalizar do carrinho
+btnFinalizar.addEventListener('click', () => {
+    if (produtos.length === 0) {
+        alert('Seu carrinho está vazio!')
+        return
+    }
+
+    // Adiciona o idCliente (você pode pegar do localStorage ou session)
+    const pedidoData = {
+        produtos: produtos,
+        idCliente: 1, // temporário - ajuste conforme seu sistema de auth
+        formaPagamento: 'cartão' // pode ser dinâmico
+    }
+
+    fetch('http://localhost:3000/pedido', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pedidoData)
+    })
+    .then(res => res.json())
+    .then(dados => {
+        console.log('Resposta do servidor:', dados)
+        alert(`Compra finalizada com sucesso! Pedido #${dados.pedidoId}`)
+        localStorage.removeItem('produtos')
+        produtos = []
+        mostrarCarrinho()
+    })
+    .catch(err => {
+        console.error('Erro ao enviar dados:', err)
+        alert('Erro ao finalizar compra.')
+    })
+}) */
