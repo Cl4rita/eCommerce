@@ -1,12 +1,26 @@
 /node_modules
+
 # Logs
 npm-debug.log*
-.npm
+yarn-error.log
+*.log
 /logs
+
 # Variáveis de Ambiente
 .env
+
 # Cache do npm
 .npm/
-# build
+
+# Builds
 /dist
 /build
+/.tmp
+
+# Editor
+.vscode/
+
+# SO
+.DS_Store
+Thumbs.db
+

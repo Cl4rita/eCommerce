@@ -1,5 +1,3 @@
-// produtoFornecedor.controller.js
-const ProdutoFornecedor = require('../models/ProdutoFornecedor')
 const Produto = require('../models/Produto')
 const Fornecedor = require('../models/Fornecedor')
 
@@ -125,4 +123,10 @@ const removerVinculo = async (req, res) => {
     }
 }
 
-module.exports = { vincularProdutoFornecedor, listarFornecedoresDoProduto, listarProdutosDoFornecedor, atualizarCusto, removerVinculo }
+module.exports = {
+    vincularProdutoFornecedor,
+    listarFornecedoresDoProduto,
+    listarProdutosDoFornecedor,
+    atualizarCusto,
+    removerVinculo
+}

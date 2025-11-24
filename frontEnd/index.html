@@ -3,30 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="assets/css/style2.css">
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
+    <script src="assets/js/produtos.js" defer></script>
+    <title>Nome da Loja - Sua Loja de SkinCare</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🛒 Nome da Loja</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="public/carrinho.html" class="nav-link">Carrinho</a>
+                <div class="nav-auth">
+                    <a href="public/login.html" class="btn btn-outline" id="loginBtn">Entrar</a>
+                    <a href="public/registro.html" class="btn btn-primary" id="registroBtn">Cadastrar</a>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <span id="userName"></span>
+                        <div class="dropdown">
+                            <a href="public/perfil.html">Meu Perfil</a>
+                            <a href="public/pedidos.html">Meus Pedidos</a>
+                            <button id="logoutBtn">Sair</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Bem-vindo à Nome da Loja</h1>
+                <p>Encontre os melhores produtos de tecnologia com os melhores preços</p>
+                <a href="./public/menu.html" class="btn btn-primary btn-large">Ver Produtos</a>
+            </div>
+        </section>
+
+        <section class="featured">
+            <h2>Em Destaque</h2>
+            <div class="products-grid" id="featuredProducts">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Nome da Loja. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <script src="./js/progAdd.js"defer></script>
     <title>E-commerce de Ternos</title>
 </head>
-<body>
-    <!-- Cabeçalho -->
+<body>-->
+    <!-- Cabeçalho 
     <header class="menu">
         <nav>
             <a href="./index.html">Home</a>
             <a href="./public/carrinho.html">Carrinho</a>
             <a href="./public/menu.html">Menu</a>
         </nav>
-    </header>
+    </header>-->
 
-    <!-- Conteúdo principal -->
+    <!-- Conteúdo principal 
     <main>
         <h1>Bem vindos a Loja ...</h1>
         <br>
         <p></p>
-    </main>
+    </main>-->
 
-    <!-- Rodapé -->
+    <!-- Rodapé
     <footer>
         <p>&copy; 2025 Loja de Ternos Clássicos</p>
     </footer>
 </body>
-</html>
+</html>-->
