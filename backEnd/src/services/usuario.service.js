@@ -6,7 +6,7 @@ async function cadastrar(dados) {
     const { nome, email, telefone, cpf, identidade, senha, tipo_usuario  } = dados
 
     // -------- validações --------
-    if (!nome || !email || !telefone || !cpf || !senha || !tipo_usuario) {
+    if (!nome || !email || !telefone || !cpf || !senha) {
         throw new Error('Campos obrigatórios não informados')
     }
 
@@ -38,17 +38,17 @@ async function cadastrar(dados) {
     const senhaBcrypt = await hashSenha(senha)
 
     // -------- criar no banco --------
-    const novoUsuario = await Usuario.create({
+    await Usuario.create({
         nome,
         email,
         telefone,
         cpf,
         identidade,
         senha: senhaBcrypt,
-        tipo_usuario
+        tipo_usuario: tipo_usuario
     })
 
-    return novoUsuario
+    return { ok: true }
 }
 
 module.exports = { cadastrar }

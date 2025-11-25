@@ -1,25 +1,35 @@
-const authService = require('../services/auth.service')
+const Cliente = require('../model/Cliente')
+const { compareSenha } = require('../service/bcrypt.service')
+const { gerarToken } = require('../service/jwt.service')
 
-async function login(req, res) {
-    try {
-        const { email, senha } = req.body
+const login = async (req,res)=>{
+    const valores = req.body
+    console.log('body: ',valores)
 
-        // chama o service
-        const resultado = await authService.login({ email, senha })
+    try{
+        const cliente = await Cliente.findOne({where: { email: valores.email}})
 
-        return res.status(200).json({
-            mensagem: 'Login realizado com sucesso',
-            ...resultado
+        if(!cliente){
+            return res.status(404).json({error: "Cliente não encontrado!"})
+        }
+
+        const senhaValida = await compareSenha(valores.senha, cliente.senha)
+        console.log('senha válida: ', senhaValida)
+
+        if(!senhaValida){
+            return res.status(401).json({error: "Senha inválida!"})
+        }
+
+        const token = gerarToken({
+            codCliente: cliente.codCliente,
+            email: cliente.email
         })
 
-    } catch (err) {
-        console.error('Erro no controller de login:', err.message)
+        res.status(200).json({message: "Login realizado com sucesso!", token})
 
-        return res.status(500).json({
-            mensagem: err.message || 'Erro ao realizar login'
-        })
+    }catch(err){
+        res.status(500).json({error: "Erro ao realizar o login!"})
     }
-
 }
 
 module.exports = { login }
