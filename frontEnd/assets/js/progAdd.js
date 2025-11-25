@@ -17,11 +17,14 @@ function adicionarProduto(b, q) {
     const originalText = b.textContent;
     const originalColor = b.style.backgroundColor;
     
-    b.style.backgroundColor = 'green'
-    b.textContent = 'Adicionado ao carrinho'
+    // Efeito visual de confirmação
+    b.style.backgroundColor = '#10b981' // Verde
+    b.style.color = 'white'
+    b.textContent = '✓ Adicionado!'
 
     setTimeout(() => {
         b.style.backgroundColor = originalColor;
+        b.style.color = '';
         b.textContent = originalText;
     }, 1000);
 
@@ -32,11 +35,15 @@ function adicionarProduto(b, q) {
 
     const produto = { nome, preco, codProd, qtde }
 
-    produtos.push(produto)
-    // console.log(produtos)
+    // Verifica se o produto já existe no carrinho
+    const produtoExistente = produtos.find(p => p.codProd === codProd)
+    if (produtoExistente) {
+        produtoExistente.qtde += qtde
+    } else {
+        produtos.push(produto)
+    }
+    
     localStorage.setItem('produtos', JSON.stringify(produtos))
-
-    // alert(`${qtde}x ${nome} adicionado(s) ao carrinho!`)
 }
 
 // Eventos individuais
@@ -44,4 +51,3 @@ b1.addEventListener('click', () => adicionarProduto(b1, q1))
 b2.addEventListener('click', () => adicionarProduto(b2, q2))
 b3.addEventListener('click', () => adicionarProduto(b3, q3))
 b4.addEventListener('click', () => adicionarProduto(b4, q4))
-

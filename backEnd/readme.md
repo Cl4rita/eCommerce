@@ -203,7 +203,7 @@ Exemplo:
 DB_HOST=localhost
 DB_USER=root
 DB_PASS=senha
-DB_NAME=ecommerce
+DB_NAME=db_ecom
 JWT_SECRET=SUA_CHAVE_SECRETA
 ```
 

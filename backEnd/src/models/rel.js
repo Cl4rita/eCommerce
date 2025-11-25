@@ -115,8 +115,6 @@ CategoriaProduto.hasMany(Produto, {
     onUpdate: 'CASCADE'
 })
 
-// ATENÇÃO: É necessário adicionar idCategoria no modelo Produto.js
-// Produto.js deve ter: idCategoria
 Produto.belongsTo(CategoriaProduto, {
     foreignKey: 'idCategoria',
     as: 'categoriaProduto',

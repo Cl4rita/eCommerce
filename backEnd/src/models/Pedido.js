@@ -12,7 +12,7 @@ const Pedido = db.define('pedido',{
         allowNull: false,
         references: {
             model: 'usuarios', 
-            key: 'codUsuario'  
+            key: 'id'  
         }
     },
     idEndereco: {
@@ -20,7 +20,7 @@ const Pedido = db.define('pedido',{
         allowNull: true,
         references: {
             model: 'enderecos', 
-            key: 'codEndereco'  
+            key: 'id'  
         }
     },
     dataPedido: {

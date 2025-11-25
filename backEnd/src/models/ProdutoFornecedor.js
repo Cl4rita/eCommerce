@@ -12,7 +12,7 @@ const ProdutoFornecedor = db.define('produtoFornecedor',{
         allowNull: false,
         references: {
             model: 'produtos', 
-            key: 'codProduto'  
+            key: 'id'  
         }
     },
     idFornecedor: {
@@ -20,7 +20,7 @@ const ProdutoFornecedor = db.define('produtoFornecedor',{
         allowNull: false,
         references: {
             model: 'fornecedores', 
-            key: 'codFornecedor'  
+            key: 'id'  
         }
     },
     custoUnitarioAtual: { // Informação extra: Custo atual do produto com este fornecedor

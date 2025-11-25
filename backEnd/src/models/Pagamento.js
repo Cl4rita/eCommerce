@@ -12,7 +12,7 @@ const Pagamento = db.define('pagamento',{
         allowNull: true,
         references: {
             model: 'pedidos', 
-            key: 'codPedido'  
+            key: 'id'  
         }
     },
     idCompra: { // Chave para Compra (Se for um PAGAMENTO a fornecedor)
@@ -20,7 +20,7 @@ const Pagamento = db.define('pagamento',{
         allowNull: true,
         references: {
             model: 'compras', 
-            key: 'codCompra'  
+            key: 'id'  
         }
     },
     dataPagamento: {

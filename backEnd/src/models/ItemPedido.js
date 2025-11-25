@@ -12,7 +12,7 @@ const ItemPedido = db.define('itemPedido',{
         allowNull: false,
         references: {
             model: 'pedidos', 
-            key: 'codPedido'  
+            key: 'id'  
         }
     },
     idProduto: {
@@ -20,7 +20,7 @@ const ItemPedido = db.define('itemPedido',{
         allowNull: false,
         references: {
             model: 'produtos', 
-            key: 'codProduto'  
+            key: 'id'  
         }
     },
     quantidade: {

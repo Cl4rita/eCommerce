@@ -11,14 +11,14 @@ let produtos = JSON.parse(localStorage.getItem('produtos')) || []
 // Função para renderizar toda a tabela
 function mostrarCarrinho() {
     if (produtos.length === 0) {
-        areaCarrinho.innerHTML = '<p>Seu carrinho está vazio.</p>'
+        areaCarrinho.innerHTML = '<div class="carrinho-vazio"><p>Seu carrinho está vazio.</p></div>'
         totalTexto.textContent = 'Total: R$ 0,00'
         return
     }
 
     let total = 0;
     let tabelaHTML = `
-        <table>
+        <table class="tabela-carrinho">
             <thead>
                 <tr>
                     <th>Produto</th>
@@ -37,9 +37,9 @@ function mostrarCarrinho() {
         tabelaHTML += `
             <tr>
                 <td>${p.nome}</td>
-                <td>${p.preco.toFixed(2)}</td>
+                <td>R$ ${p.preco.toFixed(2)}</td>
                 <td>${p.qtde}</td>
-                <td>${subtotal.toFixed(2)}</td>
+                <td>R$ ${subtotal.toFixed(2)}</td>
             </tr>
         `
     })
@@ -64,10 +64,10 @@ btnFinalizar.addEventListener('click', () => {
     const pedidoData = produtos.map(produto => ({
         nome: produto.nome,
         preco: produto.preco,
-        quantidade: produto.qtde, // Note: 'quantidade' no model, 'qtde' no carrinho
+        quantidade: produto.qtde,
         descricao: `Pedido: ${produto.nome} - Quantidade: ${produto.qtde}`,
-        marca: 'Marca do Produto', // Você pode ajustar isso
-        imagem: 'imagem_padrao.jpg' // Imagem padrão ou ajuste conforme necessário
+        marca: 'Marca do Produto',
+        imagem: 'imagem_padrao.jpg'
     }))
 
     fetch('http://localhost:3000/terno', {
@@ -89,49 +89,19 @@ btnFinalizar.addEventListener('click', () => {
     })
 })
 
-// Botão de limpar carrilho
+// Botão de limpar carrinho
 btnLimpar.addEventListener('click', () => {
-    areaCarrinho.innerHTML = '<p>Seu carrinho está vazio.</p>'
-    totalTexto.textContent = 'Total: R$ 0,00'
-    localStorage.clear()
+    if (confirm('Tem certeza que deseja esvaziar o carrinho?')) {
+        localStorage.removeItem('produtos')
+        produtos = []
+        mostrarCarrinho()
+    }
 })
+
 // Botão de voltar à loja
 btnVoltar.addEventListener('click', () => {
-    location.href = 'index.html'
+    location.href = './loja.html'
 })
 
 // Exibe os produtos ao carregar a página
 mostrarCarrinho()
-
-/*// No btnFinalizar do carrinho
-btnFinalizar.addEventListener('click', () => {
-    if (produtos.length === 0) {
-        alert('Seu carrinho está vazio!')
-        return
-    }
-
-    // Adiciona o idCliente (você pode pegar do localStorage ou session)
-    const pedidoData = {
-        produtos: produtos,
-        idCliente: 1, // temporário - ajuste conforme seu sistema de auth
-        formaPagamento: 'cartão' // pode ser dinâmico
-    }
-
-    fetch('http://localhost:3000/pedido', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pedidoData)
-    })
-    .then(res => res.json())
-    .then(dados => {
-        console.log('Resposta do servidor:', dados)
-        alert(`Compra finalizada com sucesso! Pedido #${dados.pedidoId}`)
-        localStorage.removeItem('produtos')
-        produtos = []
-        mostrarCarrinho()
-    })
-    .catch(err => {
-        console.error('Erro ao enviar dados:', err)
-        alert('Erro ao finalizar compra.')
-    })
-}) */

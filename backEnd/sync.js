@@ -1,4 +1,4 @@
-const conn = require('./db/conn')
+const conn = require('./src/db/conn')
 
 const { 
     Usuario, 
@@ -14,7 +14,7 @@ const {
     CategoriaProduto,
     Fornecedor,
     ProdutoFornecedor
-} = require('./models/rel') 
+} = require('./src/models/rel') 
 
 async function syncDataBase(){
     try{

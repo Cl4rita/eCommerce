@@ -41,7 +41,7 @@
 }
 
 .auth-footer a {
-    color: var(--primary-color);
+    color: var(--background-color);
     text-decoration: none;
 }
 

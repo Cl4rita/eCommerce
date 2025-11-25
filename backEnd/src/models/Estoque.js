@@ -13,7 +13,7 @@ const Estoque = db.define('estoque',{
         unique: true, // Garante o relacionamento 1:1
         references: {
             model: 'produtos', 
-            key: 'codProduto'  
+            key: 'id'  
         }
     },
     // idUsuario: {

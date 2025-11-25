@@ -12,7 +12,7 @@ const Endereco = db.define('endereco',{
         allowNull: false,
         references: {
             model: 'usuarios', 
-            key: 'codUsuario'  
+            key: 'id'  
         }
     },
     // Campos do ViaCEP:

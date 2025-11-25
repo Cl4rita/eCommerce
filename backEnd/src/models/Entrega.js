@@ -13,7 +13,7 @@ const Entrega = db.define('entrega',{
         unique: true, // Garante o relacionamento 1:1 com Pedido
         references: {
             model: 'pedidos', 
-            key: 'codPedido'  
+            key: 'id'  
         }
     },
     dataEstimada: {

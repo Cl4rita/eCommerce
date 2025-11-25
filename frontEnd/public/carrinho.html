@@ -3,34 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/carrinho.css">
+    <link rel="stylesheet" href="../assets/css/style2.css">
     <script src="../assets/js/progCarrinho.js" defer></script>
     <title>Carrinho de Compras</title>
 </head>
 <body>
-    <header class="menu">
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="./carrinho.html">Carrinho</a>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🧴💫 𝖯𝗂𝗇𝗄 𝖢𝗁𝖺𝗋𝗆𝖾</h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="./loja.html" class="nav-link">Loja</a>
+                <a href="./login.html" class="nav-link">Login</a>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <h2>Resumo do Carrinho</h2>
-        <div id="area-carrinho">
-            <!-- A tabela será gerada dinamicamente pelo JavaScript -->
-        </div>
+    <main class="main">
+        <section class="featured">
+            <h2>Resumo do Carrinho</h2>
+            <div id="area-carrinho" class="carrinho-container">
+                <!-- A tabela será gerada dinamicamente pelo JavaScript -->
+            </div>
 
-        <p id="total">Total: R$ 0,00</p>
+            <div class="total-container">
+                <p id="total">Total: R$ 0,00</p>
+            </div>
 
-        <div class="botoes">
-            <button id="btn-finalizar" class="btn-comprar">Finalizar Compra</button>
-            <button id="btn-limpar" class="btn-comprar">Esvaziar Compra</button>
-            <button id="btn-voltar" class="btn-comprar">Voltar à Loja</button>
-        </div>
+            <div class="botoes-carrinho">
+                <button id="btn-finalizar" class="btn btn-primary btn-large">Finalizar Compra</button>
+                <button id="btn-limpar" class="btn btn-outline">Esvaziar Carrinho</button>
+                <button id="btn-voltar" class="btn btn-outline">Voltar à Loja</button>
+            </div>
+        </section>
     </main>
 
-    <footer>
+    <footer class="footer">
         <p>&copy; 2025 Loja de Ternos Clássicos</p>
     </footer>
 </body>

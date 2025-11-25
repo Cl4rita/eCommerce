@@ -12,7 +12,7 @@ const ItensCompra = db.define('itensCompra',{
         allowNull: false,
         references: {
             model: 'compras', 
-            key: 'codCompra'  
+            key: 'id'  
         }
     },
     idProduto: {
@@ -20,7 +20,7 @@ const ItensCompra = db.define('itensCompra',{
         allowNull: false,
         references: {
             model: 'produtos', 
-            key: 'codProduto'  
+            key: 'id'  
         }
     },
     quantidade: {
