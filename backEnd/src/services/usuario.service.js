@@ -6,7 +6,7 @@ async function cadastrar(dados) {
     const { nome, email, telefone, cpf, senha, tipo_usuario} = dados
 
     // -------- validações --------
-    if (!nome || !email || !telefone || !cpf || !senha || !tipo_usuario) {
+    if (!nome || !email || !telefone || !cpf || !senha) {
         throw new Error('Campos obrigatórios não informados')
     }
 
@@ -44,8 +44,8 @@ async function cadastrar(dados) {
         email,
         telefone,
         cpf,
-        senha: senhaBcrypt,
-        tipo_usuario: tipo_usuario
+        tipo_usuario,
+        senha: senhaBcrypt
     })
 
     return { ok: true }

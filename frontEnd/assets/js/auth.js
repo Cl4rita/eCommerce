@@ -1,37 +1,69 @@
 // auth.js - helper para frontend
-// Guarda token e usuário no localStorage e fornece helpers
+// Guarda token e usuário no sessionStorage e fornece helpers
+
+function saveUserSession(userData) {
+  sessionStorage.setItem('user', JSON.stringify(userData));
+}
+
+// Função para verificar se o usuário está autenticado
+function isAuthenticated() {
+  return sessionStorage.getItem('user') !== null;
+}
+
+// Função para redirecionar usuários não autenticados
+function enforceAuthentication() {
+  const publicPages = [
+      '/index.html',
+      '/public/login.html',
+      '/public/Usuario/cadastro.html'
+  ];
+
+  // Obtém o caminho atual da URL sem parâmetros de consulta
+  const currentPath = window.location.pathname;
+
+  // Verifica se o usuário não está autenticado e a página atual não é pública
+  if (!isAuthenticated() && !publicPages.some(page => currentPath.endsWith(page))) {
+      window.location.href = './index.html'; // Redireciona para a página inicial
+  }
+}
+
+// Chamar a função de verificação ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  enforceAuthentication();
+});
 
 const Auth = {
+
   setAuth(authResult) {
     // espera { token, usuario } ou { token, user }
     if (!authResult) return
     const token = authResult.token || authResult.accessToken || null
     const user = authResult.usuario || authResult.user || null
 
-    if (token) localStorage.setItem('token', token)
-    if (user) localStorage.setItem('user', JSON.stringify(user))
-    if (user && user.nome) localStorage.setItem('nome', user.nome)
-    if (user && user.tipo) localStorage.setItem('role', user.tipo)
+    if (token) sessionStorage.setItem('token', token)
+    if (user) sessionStorage.setItem('user', JSON.stringify(user))
+    if (user && user.nome) sessionStorage.setItem('nome', user.nome)
+    if (user && user.tipo) sessionStorage.setItem('role', user.tipo)
   },
 
   clearAuth() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    localStorage.removeItem('nome')
-    localStorage.removeItem('role')
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('nome')
+    sessionStorage.removeItem('role')
   },
 
   getToken() {
-    return localStorage.getItem('token')
+    return sessionStorage.getItem('token')
   },
 
   getUser() {
-    const u = localStorage.getItem('user')
+    const u = sessionStorage.getItem('user')
     return u ? JSON.parse(u) : null
   },
 
   getRole() {
-    return localStorage.getItem('role') || null
+    return sessionStorage.getItem('role') || null
   },
 
   isLoggedIn() {

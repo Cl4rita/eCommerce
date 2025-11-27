@@ -4,69 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../assets/css/style2.css">
-    <script src="../../assets/js/api.js" defer></script>
-    <script src="../../assets/js/auth.js" defer></script>
-    <!-- <script src="../../assets/js/Produto/cadastrarPro.js" defer></script> -->
+    <script src="assets/js/api.js" defer></script>
+    <script src="assets/js/auth.js" defer></script>
     <script>
         // Página apenas para ADMIN
         window.addEventListener('DOMContentLoaded', () => {
             if (window.Auth) Auth.requireAuth(['ADMIN'])
         })
     </script>
-    <title>Cadastro - Pink Charme</title>
+    <title>Pink Charme - Sua Loja de SkinCare Premium</title>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <h1>Cadastrar Produto</h1>
-                <p>Preencha os dados para cadastrar o produto</p>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-links">
+                <a href="../../index.html" class="nav-link active">Home</a>
+                <div class="nav-auth">
+                    <a href="public/login.html" class="btn btn-outline" id="loginBtn">Entrar</a>
+                    <a href="public/Produto/cadastrar.html" class="btn btn-primary" id="registroBtn">Produto</a>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <span class="user-name" id="userName"></span>
+                    </div>
+                </div>
             </div>
-    <br> 
-            <form id="registroForm" class="auth-form">
-                <div class="form-group">
-                    <label for="idCategoria">O código da Categoria </label>
-                    <input type="text" id="idCategoria" name="idCategoria" placeholder="Seu nome completo" required>
-                </div>
-
-            <form id="registroForm" class="auth-form">
-                <div class="form-group">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="cpf">CPF</label>
-                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="telefone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" placeholder="(11) 99999-9999" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" placeholder="Mínimo 8 caracteres com letras e números" required>
-                    <small>Deve conter letras e números, mínimo 8 caracteres</small>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-full">Cadastrar</button>
-            </form>
-
-            <div class="auth-footer">
-                <p>Já tem uma conta? <a href="../login.html">Faça login</a></p>
-                <p><a href="../../index.html">← Voltar para a loja</a></p>
-            </div>
-
-            <div id="message" class="message"></div>
-        </div>
-    </div>
-
+        </nav>
+    </header>
 </body>
 </html>
