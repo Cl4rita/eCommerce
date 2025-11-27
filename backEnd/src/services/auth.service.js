@@ -24,21 +24,23 @@ if (!senhaValida) {
 
 // -------- gerar token JWT --------
 const token = gerarToken({
-    id: usuario.codUsuario,
+    id: usuario.id,
+    codUsuario: usuario.id,
     email: usuario.email,
     tipo: usuario.tipo_usuario
 })
 
 // -------- retorno ao controller --------
-return {
-    token,
-    usuario: {
-        id: usuario.codUsuario,
-        nome: usuario.nome,
-        email: usuario.email,
-        tipo: usuario.tipo_usuario
+    return {
+        token,
+        usuario: {
+            id: usuario.id,
+            codUsuario: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email,
+            tipo: usuario.tipo_usuario
+        }
     }
-}
 
 }
 

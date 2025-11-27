@@ -19,8 +19,9 @@ async function startServer() {
       console.log('Banco autenticado (produção)')
     }
 
-    app.listen(PORT, HOST, () => {
-      console.log(`Servidor rodando em http://${HOST}:${PORT}`)
+    app.listen(PORT, () => {
+      const host = process.env.HOST || '0.0.0.0'
+      console.log(`Servidor rodando em http://${host}:${PORT}`)
     });
   } catch (err) {
     console.error('Erro ao conectar ao banco ou iniciar o servidor:', err)

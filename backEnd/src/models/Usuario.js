@@ -29,10 +29,6 @@ const Usuario = db.define('usuario',{
         allowNull: false,
         unique: true
     },
-    identidade: {
-        type: DataTypes.STRING(20), // Campo para Identidade (RG ou outro documento)
-        allowNull: true, // Permitindo NULL, já que CPF é obrigatório
-    },
     tipo_usuario: {
         type: DataTypes.ENUM('CLIENTE', 'ADMIN'),
         allowNull: false,

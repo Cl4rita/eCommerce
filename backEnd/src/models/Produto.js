@@ -9,7 +9,7 @@ const Produto = db.define('produto',{
     },
     idCategoria: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'categorias_produtos',
             key: 'id'

@@ -47,12 +47,27 @@ function getConnectionConfig() {
     }
   }
 
-  throw new Error('Nenhuma configuração de DB encontrada nas variáveis de ambiente.')
+  // Ambiente local sem variáveis: usar SQLite por conveniência (arquivo local)
+  // Isso permite executar a API em dev sem precisar configurar MySQL.
+  return {
+    uri: null,
+    options: {
+      dialect: 'sqlite',
+      storage: process.env.SQLITE_STORAGE || './database.sqlite',
+      logging: false
+    }
+  }
 }
 
-const { uri, options } = getConnectionConfig()
+const cfg = getConnectionConfig()
 
-const sequelize = new Sequelize(uri, options)
+let sequelize
+if (cfg.uri) {
+  sequelize = new Sequelize(cfg.uri, cfg.options)
+} else {
+  // Sequelize accepts a single options object for sqlite
+  sequelize = new Sequelize({ ...cfg.options })
+}
 
 async function testConnection() {
   try {

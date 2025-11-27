@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const itensCompraController = require('../controllers/itensCompra.controller')
+const itemCompraController = require('../controllers/itemCompra.controller')
 const authMiddleware = require('../middlewares/auth.middleware')
 const isAdminMiddleware = require('../middlewares/isAdmin.middleware')
 
@@ -10,7 +10,7 @@ router.get(
     '/compra/:idCompra',
     authMiddleware,
     isAdminMiddleware,
-    itensCompraController.listarItensPorCompra
+    itemCompraController.listarItensPorCompra
 )
 
 // PATCH /itens-compra/:id - Atualizar item da compra
@@ -18,7 +18,7 @@ router.patch(
     '/:id',
     authMiddleware,
     isAdminMiddleware,
-    itensCompraController.atualizarItem
+    itemCompraController.atualizarItem
 )
 
 // DELETE /itens-compra/:id - Remover item da compra
@@ -26,7 +26,7 @@ router.delete(
     '/:id',
     authMiddleware,
     isAdminMiddleware,
-    itensCompraController.removerItem
+    itemCompraController.removerItem
 )
 
 module.exports = router
