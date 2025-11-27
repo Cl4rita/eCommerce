@@ -15,7 +15,7 @@ function enforceAuthentication() {
   const publicPages = [
       '/index.html',
       '/public/login.html',
-      '/public/Usuario/cadastro.html'
+      '/public/Usuario/cadastrar.html'
   ];
 
   // Obtém o caminho atual da URL sem parâmetros de consulta
@@ -23,7 +23,7 @@ function enforceAuthentication() {
 
   // Verifica se o usuário não está autenticado e a página atual não é pública
   if (!isAuthenticated() && !publicPages.some(page => currentPath.endsWith(page))) {
-      window.location.href = './index.html'; // Redireciona para a página inicial
+      window.location.href = './login.html'; // Redireciona para a página inicial
   }
 }
 
