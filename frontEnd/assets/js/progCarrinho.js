@@ -1,4 +1,25 @@
-// Referências aos elementos
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar nome do usuário se estiver logado e ativar logout
+    if (window.Auth) {
+        const user = Auth.getUser()
+        const userNameEl = document.getElementById('userName')
+        if (user && userNameEl) userNameEl.textContent = user.nome || 'Usuário'
+
+        // attach logout button if present
+        const logoutBtn = document.getElementById('logoutBtn')
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                Auth.clearAuth()
+                window.location.href = 'login.html'
+            })
+        }
+    }
+
+    carregarProdutos();
+    // configurarFiltros();
+    // configurarModalDetalhes();
+});
+
 const areaCarrinho = document.getElementById('area-carrinho')
 const totalTexto = document.getElementById('total')
 const btnLimpar = document.getElementById('btn-limpar')

@@ -1,38 +1,27 @@
-let res = document.getElementById('res')
-let nomeVen = document.getElementById('nomeVen')
+const messageEl = document.getElementById('message')
+let nomeUs = document.getElementById('nomeUs')
 
-let logout = document.getElementById('logout')
 let login = document.getElementById('login')
 
-login.addEventListener('click', (e)=> {
+login.addEventListener('click', async (e) => {
     e.preventDefault()
 
-    let email = document.getElementById('email').value
-    let senha = document.getElementById('senha').value
+    const email = document.getElementById('email').value
+    const senha = document.getElementById('senha').value
 
-    const valores = {
-        email, senha
-    }
+    try {
+        const resp = await ApiService.login({ email, senha })
+        // resp deve conter { token, usuario }
+        Auth.setAuth(resp)
 
-    fetch(`http://localhost:3000/login`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(valores)
-    })
-    .then(resp => resp.json())
-    .then(dados => {
-        localStorage.setItem('nome', dados.nome)
-        localStorage.setItem('statusLog', dados.statusLog)
+        if (resp.usuario && resp.usuario.nome) {
+            nomeUs.innerHTML = resp.usuario.nome
+        }
 
-        nomeVen.innerHTML = dados.nome
-
-        res.innerHTML = ''
-        res.innerHTML = dados.message
-    })
-    .catch((err)=> {
+        // redirecionar para a loja por padrão
+        window.location.href = 'loja.html'
+    } catch (err) {
         console.error('Erro no login', err)
-    })
-})
-logout.addEventListener('click', ()=>{
-    localStorage.clear()
+        if (messageEl) messageEl.textContent = err.message || 'Erro no login'
+    }
 })

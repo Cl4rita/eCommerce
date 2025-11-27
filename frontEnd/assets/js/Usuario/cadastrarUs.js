@@ -1,30 +1,27 @@
-let res = document.getElementById('res')
+let message = document.getElementById('message')
 
 let cadastrar = document.getElementById('cadastrar')
 
-cadastrar.addEventListener('click', (e)=> {
+cadastrar.addEventListener('click', async (e) => {
     e.preventDefault()
 
-    let nome = document.getElementById('nome').value
-    let email = document.getElementById('email').value
-    let senha = document.getElementById('senha').value
+    const nome = document.getElementById('nome').value
+    const email = document.getElementById('email').value
+    const senha = document.getElementById('senha').value
+    let cpf = document.getElementById('cpf').value
+    const tipo_usuario = document.getElementById('tipo_usuario').value
+    const telefone = document.getElementById('telefone').value
 
-    const valores = {
-        nome, email, senha
-    }
+    // limpar caracteres não numéricos do CPF
+    cpf = cpf.replace(/\D/g, '')
 
-    fetch(`http://localhost:3000/vendendor`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(valores)
-    })
-    .then(resp => resp.json())
-    .then(dados => {
-
-        res.innerHTML = ''
-        res.innerHTML = dados.message
-    })
-    .catch((err)=> {
+    try {
+        const resp = await ApiService.register({ nome, email, senha, cpf, tipo_usuario, telefone })
+        message.innerHTML = resp.message || 'Cadastro realizado com sucesso'
+        // redirecionar para login após pequeno delay (página está em public/Usuario)
+        setTimeout(() => window.location.href = '../login.html', 1200)
+    } catch (err) {
         console.error('Erro no cadastrar', err)
-    })
+        message.innerHTML = err.message || (err && err.message) || 'Erro ao cadastrar'
+    }
 })

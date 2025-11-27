@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style2.css">
-    <link rel="stylesheet" href="../assets/css/auth.css">
-    <script src="../assets/js/api.js" defer></script>
-    <script src="../assets/js/auth.js" defer></script>
+    <link rel="stylesheet" href="../../assets/css/style2.css">
+    <link rel="stylesheet" href="../../assets/css/auth.css">
+    <script src="../../assets/js/api.js" defer></script>
+    <script src="../../assets/js/auth.js" defer></script>
+    <script src="../../assets/js/Usuario/cadastrarUs.js" defer></script>
     <title>Cadastro - Pink Charme</title>
 </head>
 <body>
@@ -37,6 +38,14 @@
                     <label for="telefone">Telefone</label>
                     <input type="text" id="telefone" name="telefone" placeholder="(11) 99999-9999" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="tipo_usuario">Tipo de Usuário</label>
+                    <select name="tipo_usuario" id="tipo_usuario">
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="ADMIN">Admin</option>
+                        </select required>
+                </div>
                 
                 <div class="form-group">
                     <label for="senha">Senha</label>
@@ -44,12 +53,12 @@
                     <small>Deve conter letras e números, mínimo 8 caracteres</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-full">Cadastrar</button>
+                <button type="submit" class="btn btn-primary btn-full" id="cadastrar">Cadastrar</button>
             </form>
 
             <div class="auth-footer">
-                <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
-                <p><a href="../index.html">← Voltar para a loja</a></p>
+                <p>Já tem uma conta? <a href="../login.html">Faça login</a></p>
+                <p><a href="../../index.html">← Voltar para a loja</a></p>
             </div>
 
             <div id="message" class="message"></div>

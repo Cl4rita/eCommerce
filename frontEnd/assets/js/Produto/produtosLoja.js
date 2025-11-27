@@ -1,19 +1,34 @@
-// produtosLoja.js
 document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar nome do usuário se estiver logado e ativar logout
+    if (window.Auth) {
+        const user = Auth.getUser()
+        const userNameEl = document.getElementById('userName')
+        if (user && userNameEl) userNameEl.textContent = user.nome || 'Usuário'
+
+        // attach logout button if present
+        const logoutBtn = document.getElementById('logoutBtn')
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                Auth.clearAuth()
+                window.location.href = 'login.html'
+            })
+        }
+    }
+
     carregarProdutos();
+    // configurarFiltros();
+    // configurarModalDetalhes();
 });
 
-function carregarProdutos() {
-    fetch('http://localhost:3000/produtos')
-        .then(resp => resp.json())
-        .then(produtos => {
-            exibirProdutos(produtos);
-        })
-        .catch(err => {
-            console.error('Erro ao carregar produtos:', err);
-            document.getElementById('grade-produtos').innerHTML = 
-                '<p>Erro ao carregar produtos. Tente novamente mais tarde.</p>';
-        });
+
+async function carregarProdutos() {
+    try {
+        const produtos = await ApiService.getProdutos()
+        exibirProdutos(produtos)
+    } catch (err) {
+        console.error('Erro ao carregar produtos:', err)
+        document.getElementById('grade-produtos').innerHTML = '<p>Erro ao carregar produtos. Tente novamente mais tarde.</p>'
+    }
 }
 
 function exibirProdutos(produtos) {
@@ -65,42 +80,29 @@ function criarProdutoElement(produto) {
     return article;
 }
 
-function adicionarAoCarrinho(idProduto) {
-    const inputQtde = document.getElementById(`qtde-${idProduto}`);
-    const quantidade = parseInt(inputQtde.value) || 1;
-    
-    // Recuperar carrinho atual do localStorage
-    let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    
-    // Verificar se o produto já está no carrinho
-    const itemExistente = carrinho.find(item => item.id === idProduto);
-    
+async function adicionarAoCarrinho(idProduto) {
+    const inputQtde = document.getElementById(`qtde-${idProduto}`)
+    const quantidade = parseInt(inputQtde.value) || 1
+
+    let carrinho = JSON.parse(localStorage.getItem('carrinho')) || []
+    const itemExistente = carrinho.find(item => item.id === idProduto)
+
     if (itemExistente) {
-        itemExistente.quantidade += quantidade;
-    } else {
-        // Buscar informações completas do produto
-        fetch(`http://localhost:3000/produtos/${idProduto}`)
-            .then(resp => resp.json())
-            .then(produto => {
-                carrinho.push({
-                    id: produto.id,
-                    nome: produto.nome,
-                    preco: produto.preco,
-                    imagem: produto.imagem_url,
-                    quantidade: quantidade
-                });
-                localStorage.setItem('carrinho', JSON.stringify(carrinho));
-                mostrarFeedback('Produto adicionado ao carrinho!');
-            })
-            .catch(err => {
-                console.error('Erro ao adicionar produto:', err);
-                mostrarFeedback('Erro ao adicionar produto', 'error');
-            });
-        return;
+        itemExistente.quantidade += quantidade
+        localStorage.setItem('carrinho', JSON.stringify(carrinho))
+        mostrarFeedback('Produto adicionado ao carrinho!')
+        return
     }
-    
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    mostrarFeedback('Produto adicionado ao carrinho!');
+
+    try {
+        const produto = await ApiService.getProduto(idProduto)
+        carrinho.push({ id: produto.id, nome: produto.nome, preco: produto.preco, imagem: produto.imagem_url, quantidade })
+        localStorage.setItem('carrinho', JSON.stringify(carrinho))
+        mostrarFeedback('Produto adicionado ao carrinho!')
+    } catch (err) {
+        console.error('Erro ao adicionar produto:', err)
+        mostrarFeedback('Erro ao adicionar produto', 'error')
+    }
 }
 
 function mostrarFeedback(mensagem, tipo = 'success') {
