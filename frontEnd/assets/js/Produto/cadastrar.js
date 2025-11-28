@@ -5,7 +5,6 @@ let cadastrar = document.getElementById('cadastrar')
 cadastrar.addEventListener('click', async (e) => {
     e.preventDefault()
 
-    let idCategoria = Number(document.getElementById('idCategoria').value)
     let nome = document.getElementById('nome').value
     let descricao = document.getElementById('descricao').value
     let modelo = document.getElementById('modelo').value
@@ -15,9 +14,21 @@ cadastrar.addEventListener('click', async (e) => {
 
 
     try {
-        const resp = await ApiService.register({ idCategoria, nome, descricao, modelo, preco, imagem_url, ativo })
+        const payload = {
+            nome,
+            descricao,
+            modelo,
+            preco: Number(preco),
+            imagem_url,
+            ativo: ativo === 'true' || ativo === true
+        }
+
+        const resp = await ApiService.request('/produto', {
+            method: 'POST',
+            body: payload
+        })
+
         message.innerHTML = resp.message || 'Cadastro realizado com sucesso'
-        setTimeout(() => window.location.href = '../loja.html', 1200)
     } catch (err) {
         console.error('Erro no cadastrar', err)
         message.innerHTML = err.message || (err && err.message) || 'Erro ao cadastrar'

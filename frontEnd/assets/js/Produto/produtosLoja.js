@@ -20,11 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // configurarModalDetalhes();
 });
 
+// cache dos produtos carregados para evitar chamadas desnecessárias
+let produtosCache = []
 
 async function carregarProdutos() {
     try {
         const produtos = await ApiService.getProdutos()
-        exibirProdutos(produtos)
+        produtosCache = produtos || []
+        exibirProdutos(produtosCache)
     } catch (err) {
         console.error('Erro ao carregar produtos:', err)
         document.getElementById('grade-produtos').innerHTML = '<p>Erro ao carregar produtos. Tente novamente mais tarde.</p>'
@@ -46,38 +49,69 @@ function exibirProdutos(produtos) {
 function criarProdutoElement(produto) {
     const article = document.createElement('article');
     article.className = 'produto';
-    
-    article.innerHTML = `
-        <figure>
-            <img src="${produto.imagem_url || '../assets/img/placeholder.jpg'}" 
-                 alt="${produto.nome}" 
-                 onerror="this.src='../assets/img/placeholder.jpg'">
-            <figcaption>${produto.nome}</figcaption>
-        </figure>
-        
-        <div class="produto-descricao">
-            <p>${produto.descricao || 'Descrição não disponível'}</p>
-        </div>
-        
-        <div class="produto-beneficios">
-            <h4>Características</h4>
-            <ul>
-                <li>Modelo: ${produto.modelo}</li>
-                <li>Categoria: ${produto.categoriaProduto?.nome || 'Geral'}</li>
-            </ul>
-        </div>
-        
-        <div class="controle-produto">
-            <span class="preco">R$ ${parseFloat(produto.preco).toFixed(2)}</span>
-            <input type="number" id="qtde-${produto.id}" min="1" value="1" class="input-qtde">
-            <button onclick="adicionarAoCarrinho(${produto.id})" 
-                    class="btn btn-primary">
-                Adicionar ao Carrinho
-            </button>
-        </div>
-    `;
-    
-    return article;
+
+    const figure = document.createElement('figure')
+    const img = document.createElement('img')
+    const placeholder = '../assets/img/placeholder.jpg'
+    // Use imagem válida ou placeholder
+    img.src = (produto.imagem_url && produto.imagem_url.toString().trim()) ? produto.imagem_url : placeholder
+    img.alt = produto.nome || 'Produto'
+    // evitar loop de onerror: remover handler após primeira falha
+    img.onerror = function() { this.onerror = null; this.src = placeholder }
+
+    const figcaption = document.createElement('figcaption')
+    figcaption.textContent = produto.nome || ''
+    figure.appendChild(img)
+    figure.appendChild(figcaption)
+
+    const desc = document.createElement('div')
+    desc.className = 'produto-descricao'
+    const pDesc = document.createElement('p')
+    pDesc.textContent = produto.descricao || 'Descrição não disponível'
+    desc.appendChild(pDesc)
+
+    const benefits = document.createElement('div')
+    benefits.className = 'produto-beneficios'
+    const h4 = document.createElement('h4')
+    h4.textContent = 'Características'
+    const ul = document.createElement('ul')
+    const liModelo = document.createElement('li')
+    liModelo.textContent = `Modelo: ${produto.modelo || ''}`
+    const liCategoria = document.createElement('li')
+    liCategoria.textContent = `Categoria: ${produto.categoriaProduto && produto.categoriaProduto.nome ? produto.categoriaProduto.nome : 'Geral'}`
+    ul.appendChild(liModelo)
+    ul.appendChild(liCategoria)
+    benefits.appendChild(h4)
+    benefits.appendChild(ul)
+
+    const controle = document.createElement('div')
+    controle.className = 'controle-produto'
+    const spanPreco = document.createElement('span')
+    spanPreco.className = 'preco'
+    spanPreco.textContent = `R$ ${parseFloat(produto.preco).toFixed(2)}`
+
+    const inputQtde = document.createElement('input')
+    inputQtde.type = 'number'
+    inputQtde.min = '1'
+    inputQtde.value = '1'
+    inputQtde.className = 'input-qtde'
+    inputQtde.id = `qtde-${produto.id}`
+
+    const btn = document.createElement('button')
+    btn.className = 'btn btn-primary'
+    btn.textContent = 'Adicionar ao Carrinho'
+    btn.addEventListener('click', () => adicionarAoCarrinho(produto.id))
+
+    controle.appendChild(spanPreco)
+    controle.appendChild(inputQtde)
+    controle.appendChild(btn)
+
+    article.appendChild(figure)
+    article.appendChild(desc)
+    article.appendChild(benefits)
+    article.appendChild(controle)
+
+    return article
 }
 
 async function adicionarAoCarrinho(idProduto) {
@@ -95,7 +129,10 @@ async function adicionarAoCarrinho(idProduto) {
     }
 
     try {
-        const produto = await ApiService.getProduto(idProduto)
+        // Usar cache local em vez de chamar endpoint /produto/:id (não existe)
+        const produto = produtosCache.find(p => p.id === idProduto) || produtosCache.find(p => p.id === Number(idProduto))
+        if (!produto) throw new Error('Produto não encontrado no cache')
+
         carrinho.push({ id: produto.id, nome: produto.nome, preco: produto.preco, imagem: produto.imagem_url, quantidade })
         localStorage.setItem('carrinho', JSON.stringify(carrinho))
         mostrarFeedback('Produto adicionado ao carrinho!')
@@ -116,7 +153,6 @@ function mostrarFeedback(mensagem, tipo = 'success') {
         background: ${tipo === 'success' ? '#10b981' : '#ef4444'};
         color: white;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         z-index: 1000;
         font-weight: 500;
     `;
@@ -127,5 +163,5 @@ function mostrarFeedback(mensagem, tipo = 'success') {
     // Remover após 3 segundos
     setTimeout(() => {
         feedback.remove();
-    }, 3000);
+    }, 2000);
 }

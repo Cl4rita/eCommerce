@@ -11,15 +11,26 @@ login.addEventListener('click', async (e) => {
 
     try {
         const resp = await ApiService.login({ email, senha })
-        // resp deve conter { token, usuario }
         Auth.setAuth(resp)
 
         if (resp.usuario && resp.usuario.nome) {
             nomeUs.innerHTML = resp.usuario.nome
         }
 
-        // redirecionar para a loja por padrão
-        window.location.href = 'loja.html'
+        // redirecionar conforme tipo de usuário (pequeno delay para feedback)
+        setTimeout(() => {
+            try {
+                const tipo = resp && resp.usuario && (resp.usuario.tipo || resp.usuario.tipo_usuario)
+                if (tipo === 'ADMIN') {
+                    location.href = './Admin.html'
+                } else {
+                    location.href = './loja.html'
+                }
+            } catch (e) {
+                // fallback
+                window.location.href = 'loja.html'
+            }
+        }, 100)
     } catch (err) {
         console.error('Erro no login', err)
         if (messageEl) messageEl.textContent = err.message || 'Erro no login'
