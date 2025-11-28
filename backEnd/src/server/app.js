@@ -12,7 +12,7 @@ const usuarioRoutes = require('../routes/usuario.routes')
 const authRoutes = require('../routes/auth.routes')
 const produtoRoutes = require('../routes/produto.routes')
 const pedidoRoutes = require('../routes/pedido.routes')
-const categoriaRoutes = require('../routes/categoria.routes')
+// const categoriaRoutes = require('../routes/categoria.routes')
 const estoqueRoutes = require('../routes/estoque.routes')
 const fornecedorRoutes = require('../routes/fornecedor.routes')
 const compraRoutes = require('../routes/compra.routes')
@@ -24,10 +24,10 @@ const produtoFornecedorRoutes = require('../routes/produtoFornecedor.routes')
 const itensCompraRoutes = require('../routes/itensCompra.routes')
 
 app.use('/usuario', usuarioRoutes)
-app.use('/auth', authRoutes)
+app.use('/', authRoutes)
 app.use('/produto', produtoRoutes)
 app.use('/pedido', pedidoRoutes)
-app.use('/categoria', categoriaRoutes)
+// app.use('/categoria', categoriaRoutes)
 app.use('/estoque', estoqueRoutes)
 app.use('/fornecedor', fornecedorRoutes)
 app.use('/compra', compraRoutes)
@@ -57,7 +57,6 @@ app.get('/', (req, res) => {
             usuario: '/usuario',
             produto: '/produto',
             pedido: '/pedido',
-            categoria: '/categoria',
             estoque: '/estoque',
             fornecedor: '/fornecedor',
             compra: '/compra',

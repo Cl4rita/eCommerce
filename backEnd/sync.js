@@ -11,7 +11,6 @@ const {
     Compra,
     Pagamento,
     ItensCompra,
-    CategoriaProduto,
     Fornecedor,
     ProdutoFornecedor
 } = require('./src/models/rel') 

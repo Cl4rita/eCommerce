@@ -7,8 +7,7 @@ const Endereco = require('./Endereco')
 const Estoque = require('./Estoque')
 const Compra = require('./Compra')
 const Pagamento = require('./Pagamento')
-const ItensCompra = require('./ItensCompra') 
-const CategoriaProduto = require('./CategoriaProduto')
+const ItensCompra = require('./ItensCompra')
 const Fornecedor = require('./Fornecedor')
 const ProdutoFornecedor = require('./ProdutoFornecedor')
 
@@ -106,21 +105,6 @@ Pagamento.belongsTo(Pedido, {
 // -------------------------------------------------------------------------
 // 3. RELACIONAMENTOS PRODUTO & CATEGORIA & ESTOQUE
 // -------------------------------------------------------------------------
-
-// PRODUTO <-> CATEGORIA (N:1)
-CategoriaProduto.hasMany(Produto, {
-    foreignKey: 'idCategoria',
-    as: 'produtosDaCategoria',
-    onDelete: 'SET NULL', // Se a Categoria for deletada, o produto fica sem
-    onUpdate: 'CASCADE'
-})
-
-Produto.belongsTo(CategoriaProduto, {
-    foreignKey: 'idCategoria',
-    as: 'categoriaProduto',
-    onDelete: 'SET NULL', 
-    onUpdate: 'CASCADE'
-})
 
 // PRODUTO <-> ITEM_PEDIDO (1:N - Vendas)
 Produto.hasMany(ItemPedido, { 
@@ -235,7 +219,6 @@ module.exports = {
     Compra,
     Pagamento,
     ItensCompra,
-    CategoriaProduto,
     Fornecedor,
     ProdutoFornecedor
 }
